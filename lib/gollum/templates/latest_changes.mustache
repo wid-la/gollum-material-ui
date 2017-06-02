@@ -1,0 +1,51 @@
+<div id="wiki-wrapper" class="history">
+
+<!-- ### MATERIAL GRID -->
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--2-col">
+
+    <span id="page-path-title" class="mdl-chip mdl-chip--contact">
+      <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">✎</span>
+      <span class="mdl-chip__text">{{title}}</span>
+    </span>
+
+  </div>
+  <div class="mdl-cell mdl-cell--8-col">
+
+      <table id="md-wiki-history" class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+        <thead>
+          <tr>
+            <th class="mdl-data-table__cell--non-numeric">Author</th>
+            <th class="mdl-data-table__cell--non-numeric">Date</th>
+            <th>Commit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#versions}}
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric author">{{>author_template}}</td>
+            <td class="mdl-data-table__cell--non-numeric"><span class="time-elapsed" title="{{date_full}}">{{date}}</span></td>
+            <td class="commit-name">
+              {{message}}
+              [{{id7}}]
+              {{#files}}
+              <br>
+              <a href="{{link}}">{{file}}</a>
+              {{/files}}
+            </td>
+          </tr>
+          {{/versions}}
+        </tbody>
+      </table>
+
+  </div>
+  <div class="mdl-cell mdl-cell--2-col">
+
+  </div>
+</div>
+<!-- ### END MATERIAL GRID -->
+
+<div id="footer">
+
+</div>
+</div>

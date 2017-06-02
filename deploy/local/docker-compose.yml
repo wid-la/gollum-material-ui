@@ -1,0 +1,22 @@
+version: '2'
+services:
+  wiki:
+    container_name: wiki
+    image: widla/gollum-material-ui:latest
+    restart: always
+    networks:
+      - front 
+    ports:
+      - "8001:4567"
+    volumes:
+      - "PATH/data:/wiki"
+    #  - "PATH/gollum/lib:/usr/local/bundle/gems/gollum-4.1.0/lib"
+    environment:
+      STYX_URL: http://styx:8081
+      TOKEN_NAME: "auth-server-token"
+      REDIRECT: "https://main-app.com"
+
+networks:
+  front:
+    external:
+      name: docker_front
