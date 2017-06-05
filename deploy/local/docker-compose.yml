@@ -12,7 +12,7 @@ services:
       - "PATH/data:/wiki"
     #  - "PATH/gollum/lib:/usr/local/bundle/gems/gollum-4.1.0/lib"
     environment:
-      STYX_URL: http://styx:8081
+      STYX_URL: "styx:8082"
       TOKEN_NAME: "auth-server-token"
       REDIRECT: "https://main-app.com"
 
