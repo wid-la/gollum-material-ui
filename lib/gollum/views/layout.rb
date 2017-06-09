@@ -16,6 +16,14 @@ module Precious
         "Home"
       end
 
+      def app_name
+        @app_name
+      end
+
+      def home_page
+        "#{@redirect}/#{@home_page}"
+      end
+
       def has_path
         !@path.nil?
       end

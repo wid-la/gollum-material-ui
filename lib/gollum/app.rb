@@ -73,25 +73,26 @@ module Precious
 
     def get_styx_payload(token)
       uri = URI.parse(@styx_url + '/sessionmanagement/sessions/' + token)
-
       http = Net::HTTP.new(uri.host, uri.port)
-      request = Net::HTTP::Get.new(uri.request_uri)
 
+      request = Net::HTTP::Get.new(uri.request_uri)
       response = http.request(request)
 
       puts "______ STYX _______"
       puts response
       puts response.code
 
-      if response.code == '403'
+      if response.code == '403' && !@redirect.nil?
         puts "Redirect !!"
         redirect @redirect 
       end
 
-      # response.code             # => 301
-      # response.body             # => The body (HTML, XML, blob, whatever)
-
       hash    = JSON.parse(response.body)
+
+      if !hash["policies"].include? @service_name
+        puts "Redirect !!"
+        redirect @redirect 
+      end
 
       decode_tas_payload(hash["payload"])
     end
@@ -148,14 +149,20 @@ module Precious
       @token_name = ENV["TOKEN_NAME"]
       @redirect = ENV["REDIRECT"]
       @styx_url = ENV["STYX_URL"]
+      @app_name = ENV["APP_NAME"]
+      @home_page = ENV["HOME_PAGE"]
+      @service_name = ENV["SERVICE_NAME"]
       
       token = request.cookies[@token_name]
-      if token.nil?
+
+      if token.nil? && !@redirect.nil?
         puts "Redirect !!!"
         redirect @redirect 
       end
 
-      get_styx_payload(token)
+      if !token.nil?
+        get_styx_payload(token)
+      end
     end
 
     get '/' do
