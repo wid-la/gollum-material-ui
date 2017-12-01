@@ -1,42 +1,42 @@
 <div id="wiki-wrapper" class="results">
-<div id="head" style="border:none;">
-  <h1>{{title}}</h1>
-  <ul class="actions">
-    <li class="minibutton">
-      {{>searchbar}}
-    </li>
-    <li class="minibutton"><a href="{{base_url}}/"
-       class="action-home-page">Home</a></li>
-    {{#allow_editing}}
-      <li class="minibutton jaws">
-      <a href="#" id="minibutton-new-page">New</a></li>
-    {{/allow_editing}}
-  </ul>
-</div>
-<div id="pages">
 
-{{#has_results}}
-  <div id="file-browser">
-    <div class="breadcrumb">
-      {{{breadcrumb}}}
-    </div>
-    <ul>
-      {{{files_folders}}}
-    </ul>
+<!-- ### MATERIAL GRID -->
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--2-col">
+
+    <span id="page-path-title" class="mdl-chip mdl-chip--contact">
+      <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">✎</span>
+      <span class="mdl-chip__text">{{title}}</span>
+    </span>
+
   </div>
-{{/has_results}}
+  <div class="mdl-cell mdl-cell--8-col">
+      
+      <div id="pages">
+      {{#has_results}}
+        <div id="file-browser">
+          <div class="breadcrumb">
+            {{{breadcrumb}}}
+          </div>
+          <ul>
+            {{{files_folders}}}
+          </ul>
+        </div>
+      {{/has_results}}
 
-{{#no_results}}
-  <p id="no-results">
-    There are no pages in <strong>{{ref}}</strong>.
-  </p>
-{{/no_results}}
+      {{#no_results}}
+        <p id="no-results">
+          There are no pages in <strong>{{ref}}</strong>.
+        </p>
+      {{/no_results}}
+      </div>      
 
+  </div>
+  <div class="mdl-cell mdl-cell--2-col">
+
+  </div>
 </div>
-<div id="footer">
-  <ul class="actions">
-    <li class="minibutton"><a href="#">Back to Top</a></li>
-  </ul>
-</div>
+<!-- ### END MATERIAL GRID -->
+
 </div>
 
