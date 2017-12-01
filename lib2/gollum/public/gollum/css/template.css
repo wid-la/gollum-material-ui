@@ -130,7 +130,7 @@ a:active, a:hover {
 }
 
 .markdown-body {
-  padding: 1em;
+  /* padding: 1em; */
   font-size: 15px;
   line-height: 1.7;
   overflow: hidden;
@@ -138,9 +138,9 @@ a:active, a:hover {
 }
 
 @media all and (min-width: 940px) {
-  .markdown-body {
+  /* .markdown-body {
     padding: 30px;
-  }
+  } */
 }
 
 .markdown-body > *:first-child {
