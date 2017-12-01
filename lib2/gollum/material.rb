@@ -38,8 +38,8 @@ def decode_tas_payload(payload)
   return -1, "" if payload.nil?
   plain   = Base64.decode64(payload)
   hash    = JSON.parse(plain)
-  first   = hash["user"]["firstName"]
-  last    = hash["user"]["lastName"]
+  first   = hash["user"]["first_name"]
+  last    = hash["user"]["last_name"]
   email   = hash["user"]["email"]
   author =  { :name => "#{first} #{last}", :email => email }
   return nil, author
