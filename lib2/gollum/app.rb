@@ -10,6 +10,7 @@ require 'gollum'
 require 'gollum/views/layout'
 require 'gollum/views/editable'
 require 'gollum/views/has_page'
+require 'gollum/material'
 
 require File.expand_path '../helpers', __FILE__
 
@@ -104,6 +105,25 @@ module Precious
       @css = settings.wiki_options[:css]
       @js  = settings.wiki_options[:js]
       @mathjax_config = settings.wiki_options[:mathjax_config]
+
+      # Material UI Section
+
+      @token_name = ENV["TOKEN_NAME"]
+      @redirect = ENV["REDIRECT"]
+      @styx_url = ENV["STYX_URL"]
+      @app_name = ENV["APP_NAME"]
+      @home_page = ENV["HOME_PAGE"]
+      @service_name = ENV["SERVICE_NAME"]
+      
+      token = request.cookies[@token_name]
+
+      err, author = get_styx_payload(@styx_url, token, @redirect, @service_name)
+      if !err.nil?
+        puts "Redirect !!!"
+        redirect @redirect 
+      else 
+        session['gollum.author'] = author
+      end
     end
 
     get '/' do
@@ -415,7 +435,7 @@ module Precious
 
     get '/latest_changes' do
       @wiki = wiki_new
-      max_count = settings.wiki_options.fetch(:latest_changes_count, 10)
+      max_count = settings.wiki_options.fetch(:latest_changes_count, 20)
       @versions = @wiki.latest_changes({:max_count => max_count})
       mustache :latest_changes
     end
@@ -527,6 +547,10 @@ module Precious
         @name          = name
         @content       = page.formatted_data
         @upload_dest   = find_upload_dest(path)
+
+        # MATERIAL CARD SIDEBAR
+        @versions      = wiki.latest_changes({:max_count => 20})
+        @all_pages     = wiki.pages
 
         # Extensions and layout data
         @editable      = true

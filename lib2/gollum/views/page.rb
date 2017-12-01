@@ -143,6 +143,86 @@ module Precious
         @page.metadata
       end
 
+      #########################
+      #  Material UI Section  #
+      #########################
+
+      def current_folder
+        @page.url_path_title.split('/')[0...-1].join('/')
+      end
+
+      # Root Folders
+      def categories
+          folders = []
+
+          @all_pages.each do |page|
+            page_path = page.path
+            page_path = page_path.sub(/^#{Regexp.escape(@path)}\//, '') unless @path.nil?
+
+            if page_path.include?('/') 
+              folder      = page_path.split('/').first
+              folder_path = @path ? "#{@path}/#{folder}" : folder              
+              f = { 
+                :folder      => folder,
+                :link      => "#{@base_url}/pages/#{folder_path}/"
+              }
+
+              folders.push(f) unless folders.include?(f)
+            end
+          end
+
+          folders
+      end
+
+      # Pages in the same directory
+      def related_articles
+        page_files = []
+        path_length = current_folder.split('/').size() + 1
+
+        @all_pages.each do |page|
+          page_path = page.path
+          page_path = page_path.sub(/^#{Regexp.escape(@path)}\//, '') unless @path.nil?
+
+          if page_path.include?(current_folder) && page_path.split('/').size() == path_length
+              f = { 
+                :file      => "#{page.name}",
+                :link      => "#{@base_url}/#{page.escaped_url_path}"
+              }
+              page_files.push(f)
+          end
+        end
+
+        page_files
+      end
+
+      def versions
+        res = @versions.map do |v|
+          f = v.stats.files.first.first
+          page_path = extract_renamed_path_destination(f)
+          page_path = remove_page_extentions(page_path)
+
+          { :file      => f,
+            :link      => "#{page_path}"
+          }
+        end
+        res.uniq[1..5]
+      end
+
+      def remove_page_extentions(page_path)
+        Gollum::Markup.formats.values.each do |format|
+          page_path = page_path.gsub(/\.#{format[:regexp]}$/, '')
+        end
+        return page_path
+      end
+
+      def extract_renamed_path_destination(file)
+        return file.gsub(/{.* => (.*)}/, '\1').gsub(/.* => (.*)/, '\1')
+      end
+
+      #########################
+      #      END Section      #
+      #########################
+
       private
 
       # Wraps page formatted data to Nokogiri::HTML document.

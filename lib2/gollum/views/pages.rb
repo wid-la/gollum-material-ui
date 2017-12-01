@@ -23,7 +23,7 @@ module Precious
             end
           end
 
-          breadcrumb.join(" / ")
+          breadcrumb.join(" > ")
         else
           "Home"
         end
