@@ -197,7 +197,8 @@ module Precious
 
       def versions
         res = @versions.map do |v|
-          f = v.stats.files.first.first
+          # f = v.stats.files.first.first
+          f = v.stats.files.first
           page_path = extract_renamed_path_destination(f)
           page_path = remove_page_extentions(page_path)
 
