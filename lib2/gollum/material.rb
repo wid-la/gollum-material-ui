@@ -4,7 +4,7 @@ require 'base64'
 require 'json'
 
 def get_styx_payload(styx_url, token, redirect_url, service_name)
-  uri = URI.parse(styx_url + '/sessionmanagement/sessions/' + token)
+  uri = URI.parse("#{styx_url}/sessionmanagement/sessions/#{token}")
   http = Net::HTTP.new(uri.host, uri.port)
 
   request = Net::HTTP::Get.new(uri.request_uri)
